@@ -35,6 +35,10 @@ import javax.persistence.Table;
     @NamedQuery(name = "Cliente.findById", query = "SELECT c FROM Cliente c WHERE c.id = :id"),
     @NamedQuery(name = "Cliente.findByNombre", query = "SELECT c FROM Cliente c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "Cliente.findByNif", query = "SELECT c FROM Cliente c WHERE c.nif = :nif")})
+// Implementamos Serializable porque es una buena práctica en las entidades JPA,
+// aunque no es estrictamente necesario. Si no se implementa Serializable, 
+// no se podrán serializar los objetos de esta clase, lo que puede ser un problema en algunos casos, 
+// como cuando se usan en aplicaciones web
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,7 +56,12 @@ public class Cliente implements Serializable {
     // Cada Venta tiene un atributo Cliente que realiza esa venta
     // Relación bidireccional con Venta. Esta entidad no es propietaria
     // de la relación (no tiene la clave foránea de Venta)
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST) 
+    // cascade = CascadeType.Persist hace que las operaciones de persistencia
+    // se propaguen a Venta, es decir, si se persiste un Cliente, también se persistirán 
+    // sus Venta asociados
+    // orphanRemoval = true hace que si se elimina una Venta de la colección 
+    // de Venta de un Cliente, esa Venta también se elimine de la base de datos
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true) 
     private Collection<Venta> ventaCollection;
 
     public Cliente() {

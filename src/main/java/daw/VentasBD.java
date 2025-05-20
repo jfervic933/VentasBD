@@ -100,11 +100,11 @@ public class VentasBD {
         // a modo de ejemplo
         Detalleventa detalle2 = venta3.getDetalleventaCollection().stream().toList().get(0);
         // Se elimina el detalle en la venta para mantener la relación bidireccional
+        // Gracias a orphanRemoval = true, al eliminar el detalle de la venta, 
+        // ese detalle también se elimina de la base de datos cuando se actualiza la venta
         venta3.removeDetalleVenta(detalle2);
-        // Se elimina el detalle de la base de datos
-        dvc.delete(detalle2.getId());
         // Se actualiza la venta en la base de datos
-        vc.update(venta3);
+        vc.update(venta3); 
         // Se muestran los datos de la base de datos
         System.out.println("Clientes en la base de datos con detalle venta eliminado ----------- ");
         ServicioCliente.mostrarTodosClientes();

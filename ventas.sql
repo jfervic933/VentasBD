@@ -11,20 +11,6 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando estructura para tabla empresa_ventas.detalleventa
-CREATE TABLE IF NOT EXISTS `detalleventa` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `idventa` int DEFAULT NULL,
-  `idproducto` int DEFAULT NULL,
-  `cantidad` int DEFAULT NULL,
-  `precioventa` float DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idventa_idx` (`idventa`),
-  KEY `idproducto_idx` (`idproducto`),
-  CONSTRAINT `idproducto` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`id`),
-  CONSTRAINT `idventa` FOREIGN KEY (`idventa`) REFERENCES `venta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- Volcando estructura para tabla empresa_ventas.producto
 CREATE TABLE IF NOT EXISTS `producto` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -45,3 +31,16 @@ CREATE TABLE IF NOT EXISTS `venta` (
   CONSTRAINT `idcliente` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- Volcando estructura para tabla empresa_ventas.detalleventa
+CREATE TABLE IF NOT EXISTS `detalleventa` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `idventa` int DEFAULT NULL,
+  `idproducto` int DEFAULT NULL,
+  `cantidad` int DEFAULT NULL,
+  `precioventa` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idventa_idx` (`idventa`),
+  KEY `idproducto_idx` (`idproducto`),
+  CONSTRAINT `idproducto` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`id`),
+  CONSTRAINT `idventa` FOREIGN KEY (`idventa`) REFERENCES `venta` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

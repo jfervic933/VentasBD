@@ -48,6 +48,7 @@ public class Venta implements Serializable {
     // En este caso Venta es la propietaria de la relación con Cliente @JoinColumn
     // Esta tabla tiene la clave foránea a Cliente
     @JoinColumn(name = "idcliente", referencedColumnName = "id")
+    // opcional = false porque una venta siempre tiene que tener un cliente asociado
     @ManyToOne(optional = false)
     private Cliente cliente;
 
@@ -55,8 +56,12 @@ public class Venta implements Serializable {
     // Relación bidireccional con Venta. Esta entidad no es propietaria
     // de la relación (no tiene la clave foránea a DetalleVenta)
     // cascade = CascadeType.Persist hace que las operaciones de persistencia
-    // se propaguen a DetalleVenta
-    @OneToMany(mappedBy = "idventa", cascade = CascadeType.PERSIST)
+    // se propaguen a DetalleVenta, es decir, si se persiste una Venta, también se persistirán 
+    // sus DetalleVenta asociados
+    // orphanRemoval = true hace que si se elimina un DetalleVenta de la colección 
+    // de DetalleVenta de una Venta, ese DetalleVenta también se elimine de la base de datos
+    // Esto es útil para mantener la integridad referencial y evitar registros huérfanos en la base de datos
+    @OneToMany(mappedBy = "idventa", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Collection<Detalleventa> detalleventaCollection;
 
     public Venta() {
