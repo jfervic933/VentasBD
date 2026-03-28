@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class ServicioProducto {
 
-    private static final ProductoController pc = new ProductoController();
+    private static final ProductoController productoController = new ProductoController();
 
     public static void insertarProductosEjemplo() {
         var lista = new ArrayList<Producto>();
@@ -21,18 +21,18 @@ public class ServicioProducto {
         lista.add(new Producto("Altavoz logitech", 14.98f, 100));
 
         for (Producto producto : lista) {
-            pc.create(producto);
+            productoController.create(producto);
         }
         System.out.println("--- > Productos de ejemplo insertados ");
 
     }
 
     public static void mostrarTodosProductos() {
-        pc.findAll().forEach(System.out::println);
+        productoController.findAll().forEach(System.out::println);
 
     }
     
     public static void borrarTodosProductos(){
-        pc.deleteAll();
+        productoController.deleteAll();
     }
 }

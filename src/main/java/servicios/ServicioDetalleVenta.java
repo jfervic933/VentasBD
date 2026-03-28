@@ -9,14 +9,14 @@ import controladores.DetalleventaController;
  */
 public class ServicioDetalleVenta {
     
-    private static final DetalleventaController dvc = new DetalleventaController();
+    private static final DetalleventaController detalleVentaController = new DetalleventaController();
     
     public static void borrarTodosDetallesVentas(){
-        dvc.deleteAll();
+        detalleVentaController.deleteAll();
     }
     
     public static void mostrarTodosDetallesVenta() {
-        dvc.findAll().forEach(System.out::println);
+        detalleVentaController.findAll().forEach(System.out::println);
 
     }
 }
