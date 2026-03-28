@@ -7,10 +7,11 @@ import java.util.ArrayList;
 /**
  *
  * @author jfervic933
+ * 
  */
 public class ServicioCliente {
 
-    private static final ClienteController cc = new ClienteController();
+    private static final ClienteController controladorCliente = new ClienteController();
 
     public static void insertarClientesEjemplo() {
         var lista = new ArrayList<Cliente>();
@@ -21,18 +22,18 @@ public class ServicioCliente {
         lista.add(new Cliente("Luis Hernandez", "33445566T"));
         // Todos los clientes se guardan sin ventas
         for (Cliente cliente : lista) {
-            cc.create(cliente);
+            controladorCliente.create(cliente);
         }
         System.out.println("--- > Clientes de ejemplo insertados ");
     }
 
     public static void mostrarTodosClientes() {
-        cc.findAll().forEach(System.out::println);
+        controladorCliente.findAll().forEach(System.out::println);
         System.out.println("-------------------------------------------------");
     }
     
     public static void borrarTodosClientes(){
-        cc.deleteAll();
+        controladorCliente.deleteAll();
     }
 
 }

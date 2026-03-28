@@ -16,13 +16,14 @@ import servicios.ServicioVenta;
 
 public class VentasBD {
 
-    // Lo ideal sería crear un servicio para cada controlador, pero
+    // Lo ideal sería que las clases servicio fueran las que tuvieran la lógica de negocio
+    // y usaran los controladores para acceder a la base de datos,
     // para este ejercicio no es necesario. Para simplificar el código usamos
     // directamente los controladores
-    private static final ClienteController cc = new ClienteController();
+    private static final ClienteController clienteController = new ClienteController();
     // private static final ProductoController pc = new ProductoController(); // No se usa en este main
-    private static final VentaController vc = new VentaController();
-    private static final DetalleventaController dvc = new DetalleventaController();
+    private static final VentaController ventaController = new VentaController();
+    private static final DetalleventaController detalleVentaController = new DetalleventaController();
 
     public static void main(String[] args) {
 
@@ -46,9 +47,9 @@ public class VentasBD {
 
         // Modificar el cliente con id 2 -------------------------------------------
         // Se busca el cliente por su id. Se modifica el nombre del cliente
-        Cliente cliente = cc.findById(2);
+        Cliente cliente = clienteController.findById(2);
         cliente.setNombre("nombre nuevo");
-        cc.update(cliente);
+        clienteController.update(cliente);
         // Se muestran los datos de la base de datos
         System.out.println("Clientes en la base de datos con nombre modificado ----------- ");
         ServicioCliente.mostrarTodosClientes();
@@ -56,7 +57,7 @@ public class VentasBD {
 
         // Modificar la fecha de la venta 1 del cliente 1 -------------------------
         // Se busca el cliente por su id
-        Cliente clienteModificar = cc.findById(1);
+        Cliente clienteModificar = clienteController.findById(1);
         // Obtiene la venta del cliente a modificar, en este caso la primera venta, como
         // ejemplo
         Venta venta = clienteModificar.getVentaCollection().stream().toList().get(0);
@@ -67,7 +68,7 @@ public class VentasBD {
         // Actualiza la fecha de la venta
         venta.setFecha(localDateTime);
         // Actualiza la venta en la base de datos
-        vc.update(venta);
+        ventaController.update(venta);
         // Se muestran los datos de la base de datos
         System.out.println("Clientes en la base de datos con fecha de venta modificada ----------- ");
         ServicioCliente.mostrarTodosClientes();
@@ -76,7 +77,7 @@ public class VentasBD {
         // Modificar la cantidad de producto del primer detalle de la venta 1 del
         // cliente 1 -------------------------
         // Se busca el cliente por su id
-        Cliente clienteModificar2 = cc.findById(1);
+        Cliente clienteModificar2 = clienteController.findById(1);
         // Se busca la venta del cliente a modificar, en este caso la primera venta, a
         // modo de ejemplo
         Venta venta2 = clienteModificar2.getVentaCollection().stream().toList().get(0);
@@ -86,14 +87,14 @@ public class VentasBD {
         // Se modifica la cantidad del detalle
         detalle.setCantidad(100000);
         // Actualiza el detalle en la base de datos
-        dvc.update(detalle);
+        detalleVentaController.update(detalle);
         // Se muestran los datos de la base de datos
         System.out.println("Clientes en la base de datos con detalle venta modificado ----------- ");
         ServicioCliente.mostrarTodosClientes();
 
         // Eliminar el primer detalle de la venta 1 del cliente 1  -------------------------
         // Se busca el cliente por su id
-        Cliente clienteModificar3 = cc.findById(1);
+        Cliente clienteModificar3 = clienteController.findById(1);
         // Se busca la venta del cliente a modificar, en este caso la primera venta
         Venta venta3 = clienteModificar3.getVentaCollection().stream().toList().get(0);
         // Se busca el detalle de la venta a eliminar, en este caso el primer detalle
@@ -104,7 +105,7 @@ public class VentasBD {
         // ese detalle también se elimina de la base de datos cuando se actualiza la venta
         venta3.removeDetalleVenta(detalle2);
         // Se actualiza la venta en la base de datos
-        vc.update(venta3); 
+        ventaController.update(venta3); 
         // Se muestran los datos de la base de datos
         System.out.println("Clientes en la base de datos con detalle venta eliminado ----------- ");
         ServicioCliente.mostrarTodosClientes();
